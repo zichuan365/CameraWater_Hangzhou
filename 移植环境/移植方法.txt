@@ -1,0 +1,44 @@
+1.安装Galaxy_camera.run
+
+2.设置GPIO触发
+2.1
+gedit /etc/udev/rules.d/99-galaxy-u3v.rules
+##添加
+SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c 'chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio'"
+
+gedit /etc/rc.local
+##添加
+sudo chmod 770 /sys/class/gpio/unexport /sys/class/gpio/export
+sudo echo 246 > /sys/class/gpio/export
+sudo chmod -R 777 /sys/class/gpio/gpio246
+sudo echo out > /sys/class/gpio/gpio246/direcion
+sudo echo 0 > /sys/class/gpio/gpio246/value
+
+3.将appTest拷贝至根目录如下：
+/home/nvidia/appTest/.....
+
+4.将两个xml文件拷贝至根目录如下：
+config.xml
+config_imgSize.xml
+
+5.可能存在SD卡插入，无法支持128GB以上的问题，安装配置库
+sudo apt-get install exfat-fuse exfat-utils
+
+6.设置程序自启动目录为：/home/userName/.config/autostart
+cd /home/nvidia/.config
+cd autostart 			#若没有创建,mkdir autostart
+touch app.desktop
+gedit app.desktop
+
+##添加
+[Desktop Entry]
+Type=Application
+Exec=gnome-terminal -x bash -c "sh /home/nvidia/appTest/CameraWater.sh;exec bash;"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+
+###########配置完成，开机便会自动启动，修改相应xml文件即可兼容各种情况
+###########配置完成，开机便会自动启动，修改相应xml文件即可兼容各种情况
+
+

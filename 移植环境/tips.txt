@@ -1,0 +1,168 @@
+1-----
+ubuntu固定IP
+https://www.cnblogs.com/qilai/p/11285445.html
+
+1.1
+先获取网卡名称，输入ifconfig,如下图，我们的网卡名称为 ens33
+ifconfig
+1.2
+修改网卡配置文件
+sudo gedit /etc/network/interfaces
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address 192.168.1.5
+netmask 255.255.255.0
+# dns-nameserver 8.8.8.8
+dns-nameserver 8.8.8.8
+
+sudo /etc/init.d/networking restart
+
+DNS
+gedit /etc/resolv.conf
+
+00:04:4b:de:e4:19
+
+00:e0:63:31:1f:33
+
+ifconfig eth0 up
+//1.3
+//刷新网络,并重新打开
+//sudo ip addr flush eth0
+
+//sudo systemctl restart networking.service
+////如果出错
+//sudo gedit /etc/NetworkManager/NetworkManager.conf
+//將managed = false改成true
+//sudo service network-manager restart
+//sudo reboot
+
+2-----
+ubuntu远程桌面
+
+sudo apt-get install xrdp
+sudo apt-get install vnc4server
+sudo apt-get install xubuntu-desktop
+echo "xfce4-session" >~/.xsession
+
+sudo vi /etc/xrdp/startwm.sh
+在. /etc/X11/Xsession前一行插入
+xfce4-session
+
+sudo service xrdp restart
+
+ifconfig
+102.168.1.X:3389
+
+3-----
+sudo apt-get install lrzsz
+//lrzsz,远程相互传输文件
+
+4-----Qt Image
+/usr/share/applications/
+gedit ./qtcreator.desktop
+
+xiugai---QT_XCB_GL_INTEGRATION=none ./bin/qtcreator -noload QmlProfiler -noload QmlDesigner -noload Welcome
+
+5-----查询TX2工作模式
+sudo nvpmodel -q verbose
+# 将Jetson置于Max-Q模式  模式3性能最佳
+sudo nvpmodel -m 3
+# 打开风扇
+./jetson_clocks.sh	
+
+
+
+6-----
+GPIO
+5 GND 245 246 246 247 248
+导出引脚
+echo 246 > /sys/class/gpio/export
+chmod 777 -R /sys/class/gpio
+设置/查看 方向(4种---in out high low)
+echo out > /sys/class/gpio/gpio246/direcion
+cat /sys/class/gpio/gpio246/direcion
+设置/查看 输出值
+echo 1 > /sys/class/gpio/gpio246/value
+echo 0 > /sys/class/gpio/gpio246/value
+
+cat /sys/class/gpio/gpio246/value
+取消导出引脚
+echo 245 > /sys/class/gpio/unexport
+
+ls -lL /sys/class/gpio/
+
+gedit /etc/udev/rules.d/99-galaxy-u3v.rules
+
+SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c 'chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio'"
+
+
+gedit /etc/rc.local
+仍然存在的问题
+新导出的引脚没有访问权限
+sudo chmod 770 /sys/class/gpio/unexport /sys/class/gpio/export
+
+sudo echo 245 > /sys/class/gpio/export
+sudo echo 246 > /sys/class/gpio/export
+
+sudo chmod -R 777 /sys/class/gpio/gpio245
+sudo chmod -R 777 /sys/class/gpio/gpio246
+
+7---
+端口被占用
+netstat -tln
+lsof -i :8888
+kill -9 进程ID
+
+
+mtpaint
+
+
+https://www.cnblogs.com/jsxyhelu/p/10344256.html
+
+source /home/nvidia/gdb-imagewatch/gdb-imagewatch.py
+
+gnome-terminal -x bash -c "sh /home/nvidia/appTest/CameraWater.sh;exec bash;"
+
+
+
+Linux下程序开机自启动方法：
+cd /home/nvidia/.config/autostart
+touch app.desktop
+
+    1. 创建目录（用户家目录下的.config下创建autostart目录）
+/home/user1/.config/autostart
+    2. 创建文件 app.desktop文件
+    3. 给app.desktop文件添加如下内容(其中/home/user1/TestDir/test为要启动的可执行文件)：
+[Desktop Entry]
+Type=Application
+Exec=gnome-terminal -x bash -c "sh /home/nvidia/appTest/CameraWater.sh;exec bash;"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[zh_CN]=test
+Name=animationView
+Comment[zh_CN]=hello
+Comment=hello
+
+
+//gedit /etc/rc.local
+
+sudo chmod 770 /sys/class/gpio/unexport /sys/class/gpio/export
+sudo echo 246 > /sys/class/gpio/export
+sudo chmod -R 777 /sys/class/gpio/gpio246
+sudo echo out > /sys/class/gpio/gpio246/direcion
+sudo echo 0 > /sys/class/gpio/gpio246/value
+
+sudo gnome-terminal -x bash -c "sh /home/nvidia/appTest/CameraWater.sh;exec bash;"
+
+
+//sd card
+sudo apt-get install exfat-fuse exfat-utils
+
+
+

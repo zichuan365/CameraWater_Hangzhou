@@ -1,0 +1,49 @@
+//huanyuan
+
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak    
+sudo gedit /etc/apt/sources.list 
+
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-updates main restricted universe multiverse 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-updates main restricted universe multiverse 
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-security main restricted universe multiverse 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-security main restricted universe multiverse 
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-backports main restricted universe multiverse 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-backports main restricted universe multiverse 
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main universe restricted 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main universe restricted
+
+//shurufa
+sudo apt-get install fcitx-googlepinyin
+
+在settings -> language support 里将 keyboard input method system 设置为fcitx
+在settings-> Text Entry 里，添加输入源， 搜索 google-pinyin，添加。
+
+
+
+sudo apt-get install qt5-default qtcreator -y
+
+chmod +x Galaxy_camera.run
+./Galaxy_camera.run
+
+
+cd /home/nvidia/.config
+mkdir autostart
+cd autostart
+gedit *.desktop
+
+
+cd /home/nvidia/.config/autostart
+gedit *.desktop
+
+cp -R /usr/lib/aarch64-linux-gnu/qt5/plugins/platforms /home/nvidia/appTest/
+
+chmod -R 777 platforms
+cd platforms
+
+./copylib.sh libqxcb.so
+
+
+
+
+
+

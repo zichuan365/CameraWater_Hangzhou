@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<Params num="4">
+    <CamIndex>FCU20080007</CamIndex>
+    <CamLParams num="2">
+        <Shutter>6.000000</Shutter>
+        <Gain>0.000000</Gain>
+    </CamLParams>
+    <CamWaitTime>5</CamWaitTime>
+    <OnceGrapNums>5</OnceGrapNums>
+</Params>
